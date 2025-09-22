@@ -1,0 +1,145 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  backend-tests:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: rootpass
+          MYSQL_DATABASE: blessings_test
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+        ports:
+          - 3306:3306
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        cd backend
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Wait for database
+      run: |
+        until mysqladmin ping -h 127.0.0.1 -u root -prootpass; do
+          echo "Waiting for database..."
+          sleep 2
+        done
+
+    - name: Run migrations
+      run: |
+        cd backend
+        export DATABASE_URL=mysql://root:rootpass@127.0.0.1:3306/blessings_test
+        python -c "from app.database import engine; from app.models import Base; Base.metadata.create_all(bind=engine)"
+
+    - name: Run backend tests
+      run: |
+        cd backend
+        export DATABASE_URL=mysql://root:rootpass@127.0.0.1:3306/blessings_test
+        export REDIS_URL=redis://127.0.0.1:6379/0
+        pytest tests/ -v --cov=app --cov-report=xml
+
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./backend/coverage.xml
+        flags: backend
+        name: backend-coverage
+
+  ml-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        cd backend
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run ML tests
+      run: |
+        cd backend
+        python -m pytest tests/test_ml.py -v
+
+  frontend-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: |
+        cd frontend
+        npm install
+
+    - name: Run frontend tests
+      run: |
+        cd frontend
+        npm test -- --coverage --watchAll=false
+
+  docker-build:
+    runs-on: ubuntu-latest
+    needs: [backend-tests, ml-tests, frontend-tests]
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build Docker images
+      run: |
+        docker-compose build
+
+    - name: Test Docker containers
+      run: |
+        docker-compose up -d
+        sleep 30
+
+        # Test backend health
+        curl -f http://localhost:8000/health || exit 1
+
+        # Test frontend health
+        curl -f http://localhost:3000 || exit 1
+
+        docker-compose down
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Run security scan
+      uses: securecodewarrior/github-action-scan@v1
+      with:
+        api_key: ${{ secrets.SCW_API_KEY }}
+        project_name: blessings-distribution-system
