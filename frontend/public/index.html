@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blessings Donation System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-heart me-2"></i>
+                Blessings Donation System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="donation.html">Donate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="employee-registration.html">Employee Registration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin">Admin Dashboard</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section bg-light py-5">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h1 class="display-4 fw-bold text-primary mb-3">
+                            Making a Difference Together
+                        </h1>
+                        <p class="lead mb-4">
+                            Join our mission to support those in need through transparent, 
+                            technology-driven donation management and efficient distribution.
+                        </p>
+                        <div class="d-grid gap-2 d-md-flex">
+                            <a href="donation.html" class="btn btn-primary btn-lg me-md-2">
+                                <i class="fas fa-donate me-2"></i>
+                                Donate Now
+                            </a>
+                            <a href="employee-registration.html" class="btn btn-outline-primary btn-lg">
+                                <i class="fas fa-user-plus me-2"></i>
+                                Register for Aid
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="https://via.placeholder.com/500x400/0d6efd/ffffff?text=Helping+Hands" 
+                             class="img-fluid rounded shadow" alt="Helping Hands">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section py-5">
+            <div class="container">
+                <div class="row text-center mb-5">
+                    <div class="col-lg-8 mx-auto">
+                        <h2 class="display-5 fw-bold mb-3">Our Features</h2>
+                        <p class="lead text-muted">
+                            Advanced technology meets compassionate giving for maximum impact
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-card h-100 p-4 bg-white rounded shadow-sm text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-camera fa-3x text-primary"></i>
+                            </div>
+                            <h4>Smart Receipt Processing</h4>
+                            <p class="text-muted">
+                                Upload receipt photos and our OCR technology automatically 
+                                extracts donation amounts with high accuracy.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-card h-100 p-4 bg-white rounded shadow-sm text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-brain fa-3x text-success"></i>
+                            </div>
+                            <h4>AI-Powered Eligibility</h4>
+                            <p class="text-muted">
+                                Machine learning algorithms assess aid eligibility fairly 
+                                and efficiently based on multiple criteria.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-card h-100 p-4 bg-white rounded shadow-sm text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-shield-alt fa-3x text-warning"></i>
+                            </div>
+                            <h4>Fraud Detection</h4>
+                            <p class="text-muted">
+                                Advanced algorithms detect suspicious patterns to ensure 
+                                donations reach their intended recipients.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-card h-100 p-4 bg-white rounded shadow-sm text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-map-marked-alt fa-3x text-info"></i>
+                            </div>
+                            <h4>Smart Distribution</h4>
+                            <p class="text-muted">
+                                Geographic clustering optimizes pickup schedules and 
+                                reduces crowding at distribution centers.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-card h-100 p-4 bg-white rounded shadow-sm text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-bell fa-3x text-danger"></i>
+                            </div>
+                            <h4>Smart Notifications</h4>
+                            <p class="text-muted">
+                                Automated email and SMS notifications keep donors and 
+                                beneficiaries informed throughout the process.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-card h-100 p-4 bg-white rounded shadow-sm text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-chart-line fa-3x text-secondary"></i>
+                            </div>
+                            <h4>Transparency & Analytics</h4>
+                            <p class="text-muted">
+                                Comprehensive reporting and analytics provide full 
+                                transparency into donation flows and impact.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="stats-section bg-primary text-white py-5">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-md-3 mb-4">
+                        <div class="stat-item">
+                            <h3 class="display-4 fw-bold" data-count="1500">0</h3>
+                            <p class="lead">Donations Processed</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="stat-item">
+                            <h3 class="display-4 fw-bold" data-count="750000">0</h3>
+                            <p class="lead">PKR Raised</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="stat-item">
+                            <h3 class="display-4 fw-bold" data-count="500">0</h3>
+                            <p class="lead">Families Helped</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="stat-item">
+                            <h3 class="display-4 fw-bold" data-count="95">0</h3>
+                            <p class="lead">% Accuracy</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works-section py-5">
+            <div class="container">
+                <div class="row text-center mb-5">
+                    <div class="col-lg-8 mx-auto">
+                        <h2 class="display-5 fw-bold mb-3">How It Works</h2>
+                        <p class="lead text-muted">
+                            Simple steps to make a meaningful impact
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="step-card text-center">
+                            <div class="step-number bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center">
+                                1
+                            </div>
+                            <h4>Donate</h4>
+                            <p class="text-muted">
+                                Make a donation online or upload a receipt photo 
+                                for automatic processing.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-3">
+                        <div class="step-card text-center">
+                            <div class="step-number bg-success text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center">
+                                2
+                            </div>
+                            <h4>Process</h4>
+                            <p class="text-muted">
+                                Our AI systems verify donations and assess 
+                                beneficiary eligibility automatically.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-3">
+                        <div class="step-card text-center">
+                            <div class="step-number bg-warning text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center">
+                                3
+                            </div>
+                            <h4>Distribute</h4>
+                            <p class="text-muted">
+                                Smart algorithms optimize distribution schedules 
+                                and notify recipients.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-3">
+                        <div class="step-card text-center">
+                            <div class="step-number bg-info text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center">
+                                4
+                            </div>
+                            <h4>Track</h4>
+                            <p class="text-muted">
+                                Monitor impact with detailed analytics and 
+                                transparent reporting.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <h5>Blessings Donation System</h5>
+                    <p class="mb-0">
+                        Empowering charitable giving through technology and transparency.
+                    </p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <p class="mb-0">© 2023 Blessings Donation System</p>
+                    <small class="text-muted">Made with ❤️ for humanity</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <script>
+        // Animate counters
+        function animateCounters() {
+            const counters = document.querySelectorAll('[data-count]');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                const duration = 2000; // 2 seconds
+                const step = target / (duration / 16); // 60fps
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    
+                    if (target >= 1000) {
+                        counter.textContent = Math.floor(current).toLocaleString();
+                    } else {
+                        counter.textContent = Math.floor(current);
+                    }
+                }, 16);
+            });
+        }
+
+        // Trigger animation when stats section is visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+
+        const statsSection = document.querySelector('.stats-section');
+        if (statsSection) {
+            observer.observe(statsSection);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    container_name: blessings_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: blessings
+      MYSQL_USER: blessings_user
+      MYSQL_PASSWORD: blessings_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docs/ERD.sql:/docker-entrypoint-initdb.d/schema.sql
+    networks:
+      - blessings_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # Redis for Celery and Caching
+  redis:
+    image: redis:7-alpine
+    container_name: blessings_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - blessings_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      timeout: 10s
+      retries: 5
+
+  # FastAPI Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: blessings_backend
+    environment:
+      - DATABASE_URL=mysql+pymysql://blessings_user:blessings_pass@db:3306/blessings
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - SECRET_KEY=your-secret-key-change-in-production
+      - JWT_SECRET=your-jwt-secret-change-in-production
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_USER=your-email@gmail.com
+      - SMTP_PASS=your-app-password
+      - TWILIO_SID=optional-twilio-sid
+      - TWILIO_AUTH_TOKEN=optional-twilio-token
+      - TWILIO_FROM=optional-twilio-phone
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./data:/app/data
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - blessings_network
+    command: >
+      sh -c "
+        alembic upgrade head &&
+        uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+      "
+
+  # Celery Worker
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: blessings_worker
+    environment:
+      - DATABASE_URL=mysql+pymysql://blessings_user:blessings_pass@db:3306/blessings
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - SECRET_KEY=your-secret-key-change-in-production
+      - JWT_SECRET=your-jwt-secret-change-in-production
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_USER=your-email@gmail.com
+      - SMTP_PASS=your-app-password
+      - TWILIO_SID=optional-twilio-sid
+      - TWILIO_AUTH_TOKEN=optional-twilio-token
+      - TWILIO_FROM=optional-twilio-phone
+    volumes:
+      - ./backend:/app
+      - ./data:/app/data
+    depends_on:
+      - db
+      - redis
+      - backend
+    networks:
+      - blessings_network
+    command: celery -A app.celery_app worker --loglevel=info
+
+  # React Admin Dashboard
+  admin:
+    build:
+      context: ./frontend/admin
+      dockerfile: Dockerfile
+    container_name: blessings_admin
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/admin/src:/app/src
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000/api
+    networks:
+      - blessings_network
+    depends_on:
+      - backend
+
+  # Nginx for Static Files
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: blessings_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend/public:/usr/share/nginx/html
+    depends_on:
+      - backend
+      - admin
+    networks:
+      - blessings_network
+
+  # Flower for Celery Monitoring (Development)
+  flower:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: blessings_flower
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+    ports:
+      - "5555:5555"
+    depends_on:
+      - redis
+    networks:
+      - blessings_network
+    command: celery -A app.celery_app flower --port=5555
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  blessings_network:
+    driver: bridge
