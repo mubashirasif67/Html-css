@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blessings Foundation - Charity Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-heart-fill"></i> Blessings Foundation
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="donation.html">Donate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="registration.html">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:3000" target="_blank">Admin Portal</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-white text-center py-5">
+        <div class="container">
+            <h1 class="display-4 mb-4">Making a Difference Together</h1>
+            <p class="lead mb-4">Supporting families in need through transparent and efficient distribution</p>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <a href="donation.html" class="btn btn-light btn-lg px-4">
+                            <i class="bi bi-heart"></i> Make a Donation
+                        </a>
+                        <a href="registration.html" class="btn btn-outline-light btn-lg px-4">
+                            <i class="bi bi-person-plus"></i> Register as Beneficiary
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Our Impact</h2>
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <div class="card text-center h-100 shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-people-fill text-primary" style="font-size: 3rem;"></i>
+                            <h3 class="mt-3">5,000+</h3>
+                            <p class="text-muted">Families Supported</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card text-center h-100 shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-currency-dollar text-success" style="font-size: 3rem;"></i>
+                            <h3 class="mt-3">PKR 10M+</h3>
+                            <p class="text-muted">Donations Received</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card text-center h-100 shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-shield-check text-info" style="font-size: 3rem;"></i>
+                            <h3 class="mt-3">100%</h3>
+                            <p class="text-muted">Transparent</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card text-center h-100 shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-robot text-warning" style="font-size: 3rem;"></i>
+                            <h3 class="mt-3">AI-Powered</h3>
+                            <p class="text-muted">Fair Distribution</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">How It Works</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="text-center">
+                        <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <span class="h3">1</span>
+                        </div>
+                        <h4 class="mt-3">Register</h4>
+                        <p>Employees register with their CNIC and family details</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="text-center">
+                        <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <span class="h3">2</span>
+                        </div>
+                        <h4 class="mt-3">AI Evaluation</h4>
+                        <p>Our ML models assess eligibility and prevent fraud</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="text-center">
+                        <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <span class="h3">3</span>
+                        </div>
+                        <h4 class="mt-3">Distribution</h4>
+                        <p>Scheduled pickup with SMS notifications</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Types -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Ways to Contribute</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="bi bi-moon-stars text-primary"></i> Zakat
+                            </h5>
+                            <p class="card-text">Fulfill your religious obligation by supporting eligible families</p>
+                            <a href="donation.html?type=zakat" class="btn btn-primary">Donate Zakat</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="bi bi-gift text-success"></i> Sadaqah
+                            </h5>
+                            <p class="card-text">Voluntary charity to help those in need</p>
+                            <a href="donation.html?type=sadaqah" class="btn btn-success">Donate Sadaqah</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="bi bi-heart text-danger"></i> General
+                            </h5>
+                            <p class="card-text">Support our mission with a general donation</p>
+                            <a href="donation.html?type=general" class="btn btn-danger">Donate Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OCR Feature Highlight -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h2>Smart Receipt Processing</h2>
+                    <p class="lead">Our OCR technology automatically extracts donation amounts from receipts</p>
+                    <ul>
+                        <li>Upload receipt images directly</li>
+                        <li>Automatic amount detection</li>
+                        <li>Instant verification</li>
+                        <li>Blockchain-secured receipts</li>
+                    </ul>
+                    <a href="donation.html" class="btn btn-primary">Try It Now</a>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <i class="bi bi-camera-fill text-primary" style="font-size: 8rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Blessings Foundation</h5>
+                    <p>Transparent charity management with AI-powered distribution</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="donation.html" class="text-white-50">Make a Donation</a></li>
+                        <li><a href="registration.html" class="text-white-50">Register</a></li>
+                        <li><a href="http://localhost:3000" class="text-white-50">Admin Portal</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="bg-white">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2024 Blessings Foundation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

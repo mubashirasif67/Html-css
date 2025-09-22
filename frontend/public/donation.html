@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make a Donation - Blessings Foundation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-heart-fill"></i> Blessings Foundation
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="donation.html">Donate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="registration.html">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:3000" target="_blank">Admin Portal</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Donation Form -->
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0"><i class="bi bi-heart-fill"></i> Make a Donation</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="donationForm">
+                            <!-- Donation Type -->
+                            <div class="mb-3">
+                                <label class="form-label">Donation Type *</label>
+                                <div class="btn-group w-100" role="group">
+                                    <input type="radio" class="btn-check" name="donation_type" id="type_zakat" value="zakat" required>
+                                    <label class="btn btn-outline-primary" for="type_zakat">Zakat</label>
+                                    
+                                    <input type="radio" class="btn-check" name="donation_type" id="type_sadaqah" value="sadaqah">
+                                    <label class="btn btn-outline-primary" for="type_sadaqah">Sadaqah</label>
+                                    
+                                    <input type="radio" class="btn-check" name="donation_type" id="type_general" value="general" checked>
+                                    <label class="btn btn-outline-primary" for="type_general">General</label>
+                                </div>
+                            </div>
+
+                            <!-- Donor Information -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="donor_name" class="form-label">Your Name *</label>
+                                    <input type="text" class="form-control" id="donor_name" name="donor_name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="donor_email" class="form-label">Email Address *</label>
+                                    <input type="email" class="form-control" id="donor_email" name="donor_email" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="donor_phone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="donor_phone" name="donor_phone" placeholder="+923001234567">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="donor_cnic" class="form-label">CNIC (Optional)</label>
+                                    <input type="text" class="form-control" id="donor_cnic" name="donor_cnic" placeholder="12345-1234567-1">
+                                </div>
+                            </div>
+
+                            <!-- Amount Section -->
+                            <div class="mb-3">
+                                <label class="form-label">Donation Amount (PKR) *</label>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <span class="input-group-text">PKR</span>
+                                            <input type="number" class="form-control" id="amount" name="amount" min="100" step="100" placeholder="Enter amount or upload receipt">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="btn-group w-100" role="group">
+                                            <button type="button" class="btn btn-outline-secondary amount-btn" data-amount="1000">1K</button>
+                                            <button type="button" class="btn btn-outline-secondary amount-btn" data-amount="5000">5K</button>
+                                            <button type="button" class="btn btn-outline-secondary amount-btn" data-amount="10000">10K</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- OCR Upload Section -->
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    <i class="bi bi-camera"></i> Upload Receipt (Optional - Auto-detect amount)
+                                </label>
+                                <input type="file" class="form-control" id="receipt_upload" accept="image/*">
+                                <div class="form-text">Upload a receipt image to automatically detect the amount using OCR</div>
+                                
+                                <!-- OCR Result Display -->
+                                <div id="ocrResult" class="alert alert-info mt-3 d-none">
+                                    <h6>OCR Detection Result:</h6>
+                                    <p>Detected Amount: <strong id="detectedAmount">-</strong></p>
+                                    <p>Confidence: <span id="confidence">-</span></p>
+                                    <button type="button" class="btn btn-sm btn-primary" id="useDetectedAmount">Use This Amount</button>
+                                </div>
+
+                                <!-- Image Preview -->
+                                <div id="imagePreview" class="mt-3 d-none">
+                                    <img src="" alt="Receipt Preview" class="img-thumbnail" style="max-height: 200px;">
+                                </div>
+                            </div>
+
+                            <!-- Payment Method -->
+                            <div class="mb-3">
+                                <label class="form-label">Payment Method *</label>
+                                <select class="form-select" id="payment_method" name="payment_method" required>
+                                    <option value="cash">Cash</option>
+                                    <option value="bank_transfer">Bank Transfer</option>
+                                    <option value="online">Online Payment</option>
+                                    <option value="cheque">Cheque</option>
+                                </select>
+                            </div>
+
+                            <!-- Anonymous Donation -->
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="is_anonymous" name="is_anonymous">
+                                    <label class="form-check-label" for="is_anonymous">
+                                        Make this donation anonymous
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Notes -->
+                            <div class="mb-3">
+                                <label for="notes" class="form-label">Additional Notes</label>
+                                <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                                    <i class="bi bi-heart-fill"></i> Complete Donation
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Info Cards -->
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <i class="bi bi-shield-check text-success" style="font-size: 2rem;"></i>
+                                <h6 class="mt-2">Secure</h6>
+                                <small>Your data is encrypted</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <i class="bi bi-receipt text-primary" style="font-size: 2rem;"></i>
+                                <h6 class="mt-2">Receipt</h6>
+                                <small>Instant email receipt</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <i class="bi bi-graph-up text-info" style="font-size: 2rem;"></i>
+                                <h6 class="mt-2">Transparent</h6>
+                                <small>Track your impact</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2024 Blessings Foundation. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Handle amount buttons
+        document.querySelectorAll('.amount-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.getElementById('amount').value = this.dataset.amount;
+            });
+        });
+
+        // Handle receipt upload and OCR
+        document.getElementById('receipt_upload').addEventListener('change', async function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Show preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.getElementById('imagePreview');
+                preview.querySelector('img').src = e.target.result;
+                preview.classList.remove('d-none');
+            };
+            reader.readAsDataURL(file);
+
+            // Upload for OCR
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('http://localhost:8000/api/donations/upload_receipt', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                
+                // Show OCR result
+                const ocrDiv = document.getElementById('ocrResult');
+                ocrDiv.classList.remove('d-none');
+                
+                if (result.detected_amount) {
+                    document.getElementById('detectedAmount').textContent = `PKR ${result.detected_amount}`;
+                    document.getElementById('confidence').textContent = `${(result.confidence * 100).toFixed(0)}%`;
+                    
+                    // Enable use button
+                    document.getElementById('useDetectedAmount').onclick = function() {
+                        document.getElementById('amount').value = result.detected_amount;
+                        ocrDiv.classList.add('d-none');
+                    };
+                } else {
+                    document.getElementById('detectedAmount').textContent = 'Could not detect amount';
+                    document.getElementById('confidence').textContent = 'N/A';
+                }
+            } catch (error) {
+                console.error('OCR Error:', error);
+                alert('Error processing receipt. Please enter amount manually.');
+            }
+        });
+
+        // Handle form submission
+        document.getElementById('donationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Processing...';
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Convert checkbox
+            data.is_anonymous = document.getElementById('is_anonymous').checked;
+            data.amount = parseFloat(data.amount);
+
+            try {
+                const response = await fetch('http://localhost:8000/api/donations', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    // Redirect to success page
+                    window.location.href = `success.html?id=${result.id}&amount=${result.amount}`;
+                } else {
+                    const error = await response.json();
+                    alert('Error: ' + (error.detail || 'Failed to process donation'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error submitting donation. Please try again.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="bi bi-heart-fill"></i> Complete Donation';
+            }
+        });
+    </script>
+</body>
+</html>

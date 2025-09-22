@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success - Blessings Foundation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-heart-fill"></i> Blessings Foundation
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="donation.html">Donate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="registration.html">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Success Message -->
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <div class="card shadow">
+                    <div class="card-body py-5">
+                        <i class="bi bi-check-circle-fill success-icon"></i>
+                        
+                        <h2 class="mt-4 mb-3" id="successTitle">Success!</h2>
+                        <p class="lead" id="successMessage">Your transaction has been completed successfully.</p>
+                        
+                        <div id="donationDetails" class="my-4 d-none">
+                            <div class="alert alert-success">
+                                <h5>Donation Details</h5>
+                                <p class="mb-1">Amount: <strong id="donationAmount">-</strong></p>
+                                <p class="mb-1">Transaction ID: <strong id="transactionId">-</strong></p>
+                                <p class="mb-0">Receipt sent to your email</p>
+                            </div>
+                        </div>
+                        
+                        <div id="registrationDetails" class="my-4 d-none">
+                            <div class="alert alert-info">
+                                <h5>Registration Complete</h5>
+                                <p class="mb-1">Your registration has been submitted</p>
+                                <p class="mb-0">You will receive SMS notification for distributions</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+                            <a href="/" class="btn btn-primary">
+                                <i class="bi bi-house"></i> Back to Home
+                            </a>
+                            <a href="donation.html" class="btn btn-outline-primary" id="anotherAction">
+                                <i class="bi bi-heart"></i> Make Another Donation
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Additional Information -->
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">What's Next?</h5>
+                        <ul class="text-start">
+                            <li>Check your email for the receipt</li>
+                            <li>Save your transaction ID for future reference</li>
+                            <li>Follow us on social media for updates</li>
+                            <li>Share with friends to spread the cause</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2024 Blessings Foundation. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const type = urlParams.get('type');
+        const id = urlParams.get('id');
+        const amount = urlParams.get('amount');
+        
+        // Customize message based on type
+        if (type === 'registration') {
+            document.getElementById('successTitle').textContent = 'Registration Successful!';
+            document.getElementById('successMessage').textContent = 'Your employee registration has been completed.';
+            document.getElementById('registrationDetails').classList.remove('d-none');
+            document.getElementById('anotherAction').href = 'registration.html';
+            document.getElementById('anotherAction').innerHTML = '<i class="bi bi-person-plus"></i> Register Another Employee';
+        } else if (id && amount) {
+            // Donation success
+            document.getElementById('successTitle').textContent = 'Thank You for Your Donation!';
+            document.getElementById('successMessage').textContent = 'Your generosity makes a difference in the lives of many families.';
+            document.getElementById('donationDetails').classList.remove('d-none');
+            document.getElementById('donationAmount').textContent = `PKR ${parseFloat(amount).toLocaleString()}`;
+            document.getElementById('transactionId').textContent = `TXN-${id}`;
+        }
+    </script>
+</body>
+</html>
