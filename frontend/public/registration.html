@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Registration - Blessings Foundation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-heart-fill"></i> Blessings Foundation
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="donation.html">Donate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="registration.html">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:3000" target="_blank">Admin Portal</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Registration Form -->
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0"><i class="bi bi-person-plus-fill"></i> Employee Registration</h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- Progress Bar -->
+                        <div class="registration-progress mb-4">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 0%" id="progressBar"></div>
+                            </div>
+                        </div>
+
+                        <form id="registrationForm">
+                            <!-- Personal Information -->
+                            <h5 class="mb-3">Personal Information</h5>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="name" class="form-label">Full Name *</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="cnic" class="form-label">CNIC *</label>
+                                    <input type="text" class="form-control" id="cnic" name="cnic" 
+                                           placeholder="12345-1234567-1" required
+                                           pattern="[0-9]{5}-[0-9]{7}-[0-9]">
+                                    <div class="form-text">Format: 12345-1234567-1</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="father_name" class="form-label">Father's Name</label>
+                                    <input type="text" class="form-control" id="father_name" name="father_name">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="email" name="email">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="mobile" class="form-label">Mobile Number *</label>
+                                    <input type="tel" class="form-control" id="mobile" name="mobile" 
+                                           placeholder="+923001234567" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="family_size" class="form-label">Family Size *</label>
+                                    <input type="number" class="form-control" id="family_size" name="family_size" 
+                                           min="1" max="20" required>
+                                </div>
+                            </div>
+
+                            <!-- Employment Information -->
+                            <h5 class="mb-3 mt-4">Employment Information</h5>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="grade" class="form-label">Grade (BPS) *</label>
+                                    <select class="form-select" id="grade" name="grade" required>
+                                        <option value="">Select Grade</option>
+                                        <% for(let i = 1; i <= 22; i++) { %>
+                                            <option value="<%= i %>">Grade <%= i %></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="designation" class="form-label">Designation</label>
+                                    <input type="text" class="form-control" id="designation" name="designation">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Complete Address *</label>
+                                <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                            </div>
+
+                            <!-- Location (for clustering) -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="area" class="form-label">Area/Region</label>
+                                    <select class="form-select" id="area" name="area">
+                                        <option value="">Select Area</option>
+                                        <option value="karachi-central">Karachi Central</option>
+                                        <option value="karachi-east">Karachi East</option>
+                                        <option value="karachi-west">Karachi West</option>
+                                        <option value="lahore">Lahore</option>
+                                        <option value="islamabad">Islamabad</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="income_estimate" class="form-label">Monthly Income (PKR)</label>
+                                    <input type="number" class="form-control" id="income_estimate" name="income_estimate" 
+                                           min="0" step="1000">
+                                    <div class="form-text">Optional - helps in eligibility assessment</div>
+                                </div>
+                            </div>
+
+                            <!-- Consent -->
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="consent" required>
+                                    <label class="form-check-label" for="consent">
+                                        I certify that the information provided is accurate and consent to verification
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="privacy">
+                                    <label class="form-check-label" for="privacy">
+                                        I agree to receive SMS/Email notifications about distributions
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                                    <i class="bi bi-check-circle"></i> Complete Registration
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Information Card -->
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Important Information</h5>
+                        <ul>
+                            <li>Registration is for employees only</li>
+                            <li>CNIC will be used for family deduplication</li>
+                            <li>Eligibility is determined by AI-based assessment</li>
+                            <li>You will receive SMS notification for pickup schedule</li>
+                            <li>One ration per family policy is strictly enforced</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2024 Blessings Foundation. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Update progress bar as form is filled
+        const form = document.getElementById('registrationForm');
+        const progressBar = document.getElementById('progressBar');
+        const requiredFields = form.querySelectorAll('[required]');
+        
+        function updateProgress() {
+            let filled = 0;
+            requiredFields.forEach(field => {
+                if (field.value) filled++;
+            });
+            const progress = (filled / requiredFields.length) * 100;
+            progressBar.style.width = progress + '%';
+        }
+        
+        requiredFields.forEach(field => {
+            field.addEventListener('input', updateProgress);
+        });
+        
+        // Generate grade options
+        const gradeSelect = document.getElementById('grade');
+        for (let i = 1; i <= 22; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = `Grade ${i}`;
+            gradeSelect.appendChild(option);
+        }
+        
+        // Handle form submission
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Registering...';
+            
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+            
+            // Set location based on area
+            const areaLocations = {
+                'karachi-central': { lat: 24.8607, lon: 67.0011 },
+                'karachi-east': { lat: 24.9056, lon: 67.0822 },
+                'karachi-west': { lat: 24.8103, lon: 67.0225 },
+                'lahore': { lat: 31.5204, lon: 74.3587 },
+                'islamabad': { lat: 33.6844, lon: 73.0479 }
+            };
+            
+            if (data.area && areaLocations[data.area]) {
+                data.lat = areaLocations[data.area].lat;
+                data.lon = areaLocations[data.area].lon;
+            }
+            
+            // Convert to proper types
+            data.grade = parseInt(data.grade);
+            data.family_size = parseInt(data.family_size);
+            data.income_estimate = parseFloat(data.income_estimate) || 0;
+            
+            try {
+                // Note: This would need admin authentication in production
+                const response = await fetch('http://localhost:8000/api/employees', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // In production, would need proper auth
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    window.location.href = 'success.html?type=registration';
+                } else {
+                    const error = await response.json();
+                    alert('Error: ' + (error.detail || 'Registration failed'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error submitting registration. Please try again.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="bi bi-check-circle"></i> Complete Registration';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: blessings-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass123
+      MYSQL_DATABASE: blessings
+      MYSQL_USER: blessings_user
+      MYSQL_PASSWORD: blessings_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: blessings-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: blessings-backend
+    environment:
+      DATABASE_URL: mysql+pymysql://blessings_user:blessings_pass@db:3306/blessings
+      REDIS_URL: redis://redis:6379/0
+      CELERY_BROKER_URL: redis://redis:6379/1
+      SECRET_KEY: dev-secret-key-change-in-production
+      JWT_SECRET: jwt-secret-key-change-in-production
+    volumes:
+      - ./backend:/app
+      - ml_models:/app/app/ml/models
+      - uploaded_receipts:/app/uploads
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: >
+      sh -c "
+      alembic upgrade head &&
+      uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+      "
+
+  celery_worker:
+    build: ./backend
+    container_name: blessings-celery
+    environment:
+      DATABASE_URL: mysql+pymysql://blessings_user:blessings_pass@db:3306/blessings
+      REDIS_URL: redis://redis:6379/0
+      CELERY_BROKER_URL: redis://redis:6379/1
+      SECRET_KEY: dev-secret-key-change-in-production
+    volumes:
+      - ./backend:/app
+      - ml_models:/app/app/ml/models
+      - uploaded_receipts:/app/uploads
+    depends_on:
+      - db
+      - redis
+      - backend
+    command: celery -A app.celery_app worker --loglevel=info
+
+  celery_beat:
+    build: ./backend
+    container_name: blessings-celery-beat
+    environment:
+      DATABASE_URL: mysql+pymysql://blessings_user:blessings_pass@db:3306/blessings
+      REDIS_URL: redis://redis:6379/0
+      CELERY_BROKER_URL: redis://redis:6379/1
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+      - redis
+      - backend
+    command: celery -A app.celery_app beat --loglevel=info
+
+  frontend:
+    build: ./frontend
+    container_name: blessings-frontend
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend/public:/usr/share/nginx/html
+
+  admin:
+    build: ./admin-dashboard
+    container_name: blessings-admin
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://localhost:8000
+    volumes:
+      - ./admin-dashboard:/app
+      - /app/node_modules
+    command: npm start
+
+  nginx:
+    build: ./nginx
+    container_name: blessings-nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+      - frontend
+      - admin
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+
+volumes:
+  mysql_data:
+  ml_models:
+  uploaded_receipts:
